@@ -1,0 +1,10 @@
+C:\Users\Doruk\RiderProjects\LiftSystem\bin\Debug\LiftSystem.exe.config
+C:\Users\Doruk\RiderProjects\LiftSystem\bin\Debug\LiftSystem.exe
+C:\Users\Doruk\RiderProjects\LiftSystem\bin\Debug\LiftSystem.pdb
+C:\Users\Doruk\RiderProjects\LiftSystem\obj\Debug\LiftSystem.csproj.AssemblyReference.cache
+C:\Users\Doruk\RiderProjects\LiftSystem\obj\Debug\LiftSystem.csproj.SuggestedBindingRedirects.cache
+C:\Users\Doruk\RiderProjects\LiftSystem\obj\Debug\LiftSystem.Properties.Resources.resources
+C:\Users\Doruk\RiderProjects\LiftSystem\obj\Debug\LiftSystem.csproj.GenerateResource.cache
+C:\Users\Doruk\RiderProjects\LiftSystem\obj\Debug\LiftSystem.csproj.CoreCompileInputs.cache
+C:\Users\Doruk\RiderProjects\LiftSystem\obj\Debug\LiftSystem.exe
+C:\Users\Doruk\RiderProjects\LiftSystem\obj\Debug\LiftSystem.pdb
