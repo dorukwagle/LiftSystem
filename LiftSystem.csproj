@@ -49,8 +49,10 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Constants.cs" />
+        <Compile Include="controllers\LogsController.cs" />
         <Compile Include="LiftSystem.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="views\LogsView.cs" />
         <Compile Include="views\TestForm.cs">
           <SubType>Form</SubType>
         </Compile>

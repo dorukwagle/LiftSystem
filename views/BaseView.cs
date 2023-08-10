@@ -16,10 +16,10 @@ namespace LiftSystem.views
         
         public BaseView()
         {
-            WindowState = FormWindowState.Normal;
-            ClientSize = Screen.PrimaryScreen.WorkingArea.Size;
+            WindowState = FormWindowState.Maximized;
+            ClientSize = Screen.FromHandle(Handle).WorkingArea.Size - new Size(0, 30);
             FormBorderStyle = FormBorderStyle.FixedSingle;
-            MaximizeBox = false;
+            
             
             base.Text = "Lift System";
             InitializeComponents();
@@ -32,6 +32,7 @@ namespace LiftSystem.views
 
             _leftPanel = new Panel();
             _leftPanel.Dock = DockStyle.Left;
+            _leftPanel.BackColor = Color.Aquamarine;
             _leftPanel.Width = _leftPanelWidth;
             basePanel.Controls.Add(_leftPanel);
             
@@ -39,6 +40,7 @@ namespace LiftSystem.views
             _rightPanel = new Panel();
             _rightPanel.Dock = DockStyle.Right;
             _rightPanel.Width = _rightPanelWidth;
+            _rightPanel.BackColor = Color.Aqua;
             basePanel.Controls.Add(_rightPanel);
             
             Controls.Add(basePanel);
