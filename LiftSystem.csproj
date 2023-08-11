@@ -52,6 +52,7 @@
         <Compile Include="controllers\LogsController.cs" />
         <Compile Include="LiftSystem.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
+        <Compile Include="views\ButtonEllipsis.cs" />
         <Compile Include="views\LogsView.cs" />
         <Compile Include="views\BaseView.cs" />
         <EmbeddedResource Include="Properties\Resources.resx">
