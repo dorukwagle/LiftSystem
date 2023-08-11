@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Windows.Forms;
+using LiftSystem.controllers;
 using LiftSystem.views;
 
 
@@ -11,10 +12,10 @@ namespace LiftSystem
         public static void Main()
         {
             Application.EnableVisualStyles();
-            // Application.SetCompatibleTextRenderingDefault(false);
             var baseView = new BaseView();
             var logsView = new LogsView(baseView.LeftPanel, baseView.LeftPanelWidth, baseView.PanelHeight);
-            
+
+            new LogsController(logsView);
             Application.Run(baseView);
         }
     }
