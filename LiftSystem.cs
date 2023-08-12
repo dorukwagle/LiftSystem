@@ -15,7 +15,7 @@ namespace LiftSystem
             var baseView = new BaseView();
             var logsView = new LogsView(baseView.LeftPanel, baseView.LeftPanelWidth, baseView.PanelHeight);
 
-            new LogsController(logsView);
+            _ = new LogsController(logsView);
             Application.Run(baseView);
         }
     }

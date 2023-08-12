@@ -49,10 +49,17 @@
     </ItemGroup>
     <ItemGroup>
         <Compile Include="Constants.cs" />
+        <Compile Include="controllers\CarController.cs" />
+        <Compile Include="controllers\LiftController.cs" />
         <Compile Include="controllers\LogsController.cs" />
+        <Compile Include="interfaces\Floor.cs" />
         <Compile Include="LiftSystem.cs" />
         <Compile Include="Properties\AssemblyInfo.cs"/>
         <Compile Include="views\ButtonEllipsis.cs" />
+        <Compile Include="views\CarView.cs" />
+        <Compile Include="views\DisplayPanel.cs" />
+        <Compile Include="views\FloorView.cs" />
+        <Compile Include="views\LiftView.cs" />
         <Compile Include="views\LogsView.cs" />
         <Compile Include="views\BaseView.cs" />
         <EmbeddedResource Include="Properties\Resources.resx">
