@@ -77,5 +77,15 @@
     <ItemGroup>
         <None Include="App.config"/>
     </ItemGroup>
+    <ItemGroup>
+      <Content Include="res\LiftCar.png" />
+      <Content Include="res\LiftCarLeftDoor.png" />
+      <Content Include="res\LiftCarRightDoor.png" />
+      <Content Include="res\LiftFloor.png" />
+      <Content Include="res\LiftFloorLeftDoor.png" />
+      <Content Include="res\LiftFloorRightDoor.png" />
+      <Content Include="res\LiftShaftFloor.png" />
+      <Content Include="res\LiftShaftRoof.png" />
+    </ItemGroup>
     <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
 </Project>
