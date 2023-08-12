@@ -115,11 +115,5 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Resource>
   </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LiftCar.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="Resources\LiftCar.png" />
-  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
