@@ -1,58 +1,67 @@
-// using System;
-// using System.ComponentModel;
-// using System.Drawing;
-// using System.Drawing.Printing;
-// using System.IO;
-// using System.Reflection;
-// using System.Threading;
-// using System.Threading.Tasks;
-// using System.Windows.Forms;
-//
-// namespace LiftSystem.views
-// {
-//     public class LiftView
-//     {
-//         private Control _shaftPanel;
-//         private int _shaftHeight;
-//         private int _shaftWidth;
-//         
-//         public LiftView(Control panel, int height, int width)
-//         {
-//             _shaftWidth = (int)(width * 0.6);
-//             var roofHeight = 100;
-//
-//             _shaftPanel = new PictureBox();
-//             _shaftPanel.Height = height;
-//             _shaftPanel.Width = _shaftWidth;
-//             _shaftPanel.Dock = DockStyle.Right;
-//             _shaftPanel.BackColor = Color.Transparent;
-//             panel.Controls.Add(_shaftPanel);
-//             
-//             var roof = new PictureBox();
-//             roof.Image = Properties.Resources.LiftCarLeftDoor;
-//             roof.Top = 0;
-//             roof.Left = 200;
-//             roof.BackColor = Color.Transparent;
-//             roof.Height = roofHeight;
-//             
-//             var floor = new PictureBox();
-//             floor.Top = 0;
-//             floor.Height = 100;
-//             floor.Image = Properties.Resources.LiftShaftFloor;
-//             floor.Width = _shaftWidth;
-//             floor.Height = roofHeight;
-//             floor.BackColor = Color.Transparent;
-//             
-//             _shaftPanel.Controls.Add(roof);
-//             _shaftPanel.Controls.Add(floor);
-//
-//             _shaftHeight = height - (roof.Height + floor.Height);
-//             
-//             
-//             var rp = new Panel();
-//             rp.Width = (int)(width * 0.1);
-//             rp.Dock = DockStyle.Right;
-//             panel.Controls.Add(rp);
-//         }
-//     }
-// }
+using System;
+using System.ComponentModel;
+using System.Drawing.Printing;
+using System.IO;
+using System.Reflection;
+using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Interop;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using Microsoft.Win32.SafeHandles;
+using Color = System.Drawing.Color;
+
+namespace LiftSystem.views
+{
+    public class LiftView
+    {
+        private Grid _shaftPanel;
+        private int _shaftHeight;
+        private int _shaftWidth;
+        
+        public LiftView(StackPanel panel, int height, int width)
+        {
+            _shaftWidth = (int)(width * 0.6);
+            var roofHeight = 300;
+
+            _shaftPanel = new Grid();
+            _shaftPanel.Height = height;
+            _shaftPanel.Width = _shaftWidth;
+            _shaftPanel.Background = new SolidColorBrush(Colors.Aqua);
+            panel.Children.Add(_shaftPanel);
+
+            var roof = AddImageToGrid(_shaftPanel, "pack://application:,,,/res/LiftShaftRoof.png", 0, 0);
+            roof.Height = roofHeight;
+
+            var floor = AddImageToGrid(_shaftPanel, "pack://application:,,,/res/LiftFloorLeftDoor.png", 0, 0);
+            floor.Width = 500;
+            floor.Height = roofHeight;
+            floor.Height = 600;
+            
+
+            _shaftHeight = (int) (height - (roof.Height + floor.Height));
+            
+            
+            // var rp = new StackPanel();
+            // rp.Width = (int)(width * 0.1);
+            // rp.Dock = DockStyle.Right;
+            // panel.Controls.Add(rp);
+        }
+
+        private Image AddImageToGrid(Grid grid, string uri, int row, int column)
+        {
+            Image image = new Image();
+            // Create a BitmapImage from imageBytes
+            image.Source = new BitmapImage(new Uri(uri));
+
+            // Set image dimensions and add it to the grid
+            Grid.SetRow(image, row);
+            Grid.SetColumn(image, column);
+            grid.Children.Add(image);
+
+            return image;
+        }
+    }
+}
