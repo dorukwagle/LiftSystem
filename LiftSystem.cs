@@ -1,13 +1,14 @@
 ﻿using System;
+using System.Runtime.CompilerServices;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
 // using LiftSystem.controllers;
-// using LiftSystem.views;
+using LiftSystem.views;
 
 namespace LiftSystem
 {
-    public class LiftSystem: Application
+    public class LiftSystem
     {
         [STAThread]
         public static void Main()
@@ -19,22 +20,10 @@ namespace LiftSystem
             //
             // _ = new LogsController(logsView);
             // Application.Run(baseView);
-            var app = new LiftSystem();
-            Window root = new Window();
-            InkCanvas inkCanvas1 = new InkCanvas();
-
-            root.Title = "Skortchpad";
-
-            root.ResizeMode = ResizeMode.CanResizeWithGrip;
-            inkCanvas1.Background = Brushes.DarkSlateBlue;
-            inkCanvas1.DefaultDrawingAttributes.Color = Colors.SpringGreen;
-            inkCanvas1.DefaultDrawingAttributes.Height = 10;
-            inkCanvas1.DefaultDrawingAttributes.Width = 10;
-
-            root.Content = inkCanvas1;
-            root.Show();
-            app.MainWindow = root;
-            app.Run();
+            
+            var app = new Application();
+            var baseView = new BaseView();
+            app.Run(baseView);
         }
     }
 }
