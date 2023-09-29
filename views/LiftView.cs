@@ -27,27 +27,20 @@ namespace LiftSystem.views
             var roofHeight = 300;
 
             _shaftPanel = new Grid();
-            _shaftPanel.Height = height;
+            _shaftPanel.Height = height; 
             _shaftPanel.Width = _shaftWidth;
             _shaftPanel.Background = new SolidColorBrush(Colors.Aqua);
             panel.Children.Add(_shaftPanel);
 
             var roof = AddImageToGrid(_shaftPanel, "pack://application:,,,/res/LiftShaftRoof.png", 0, 0);
             roof.Height = roofHeight;
+            roof.Width = _shaftWidth;
 
-            var floor = AddImageToGrid(_shaftPanel, "pack://application:,,,/res/LiftFloorLeftDoor.png", 0, 0);
-            floor.Width = 500;
+            var floor = AddImageToGrid(_shaftPanel, "pack://application:,,,/res/LiftShaftFloor.png", 0, 0);
+            floor.Width = _shaftWidth;
             floor.Height = roofHeight;
-            floor.Height = 600;
-            
 
             _shaftHeight = (int) (height - (roof.Height + floor.Height));
-            
-            
-            // var rp = new StackPanel();
-            // rp.Width = (int)(width * 0.1);
-            // rp.Dock = DockStyle.Right;
-            // panel.Controls.Add(rp);
         }
 
         private Image AddImageToGrid(Grid grid, string uri, int row, int column)

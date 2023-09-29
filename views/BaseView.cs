@@ -10,7 +10,6 @@ namespace LiftSystem.views
         private readonly int _fullHeight = (int)SystemParameters.WorkArea.Height;
         
         private readonly int _leftPanelWidth = (int)(SystemParameters.WorkArea.Width * Constants.LeftPanelWidthPercent);
-        private readonly int _panelHeight = (int)SystemParameters.WorkArea.Height;
         private readonly int _rightPanelWidth =
             (int)(SystemParameters.WorkArea.Height * Constants.RightPanelWidthPercent);
 
@@ -54,7 +53,7 @@ namespace LiftSystem.views
             Content = basePanel;
         }
 
-        public int PanelHeight => _panelHeight;
+        public int PanelHeight => _fullHeight;
         public int LeftPanelWidth => _leftPanelWidth;
         public int RightPanelWidth => _rightPanelWidth;
 
