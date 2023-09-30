@@ -10,6 +10,7 @@ using System.Windows.Controls;
 using System.Windows.Interop;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using LiftSystem.interfaces;
 using Microsoft.Win32.SafeHandles;
 using Color = System.Drawing.Color;
 
@@ -17,44 +18,27 @@ namespace LiftSystem.views
 {
     public class LiftView
     {
-        private Grid _shaftPanel;
-        private int _shaftHeight;
+        private static int floorCount = 0;
+        
+        private Canvas _shaftPanel;
         private int _shaftWidth;
         
-        public LiftView(StackPanel panel, int height, int width)
+        public LiftView(StackPanel panel, int width, int height)
         {
             _shaftWidth = (int)(width * 0.6);
-            var roofHeight = 300;
 
-            _shaftPanel = new Grid();
+            _shaftPanel = new Canvas();
             _shaftPanel.Height = height; 
             _shaftPanel.Width = _shaftWidth;
             _shaftPanel.Background = new SolidColorBrush(Colors.Aqua);
             panel.Children.Add(_shaftPanel);
-
-            var roof = AddImageToGrid(_shaftPanel, "pack://application:,,,/res/LiftShaftRoof.png", 0, 0);
-            roof.Height = roofHeight;
-            roof.Width = _shaftWidth;
-
-            var floor = AddImageToGrid(_shaftPanel, "pack://application:,,,/res/LiftShaftFloor.png", 0, 0);
-            floor.Width = _shaftWidth;
-            floor.Height = roofHeight;
-
-            _shaftHeight = (int) (height - (roof.Height + floor.Height));
         }
 
-        private Image AddImageToGrid(Grid grid, string uri, int row, int column)
+        public void AddFloor(IFloorView floor)
         {
-            Image image = new Image();
-            // Create a BitmapImage from imageBytes
-            image.Source = new BitmapImage(new Uri(uri));
-
-            // Set image dimensions and add it to the grid
-            Grid.SetRow(image, row);
-            Grid.SetColumn(image, column);
-            grid.Children.Add(image);
-
-            return image;
+            var panel = floor.GetView();
+            Canvas.SetTop(panel, panel.Height * floorCount + (floorCount++ > 0 ? 5 : 0));
+            _shaftPanel.Children.Add(panel);
         }
     }
 }

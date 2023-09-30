@@ -1,6 +1,6 @@
 namespace LiftSystem.interfaces
 {
-    public abstract class Floor
+    public abstract class IFloor
     {
         public void OpenDoor() {}
         
