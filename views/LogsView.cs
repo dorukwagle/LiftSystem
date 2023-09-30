@@ -100,10 +100,8 @@ namespace LiftSystem.views
             _storyboard.Children.Add(_animation);
 
             // Add completed event to enable button
-            _storyboard.Completed += (sender, e) =>
-            {
-                _logButton.IsEnabled = true;
-            };
+            _storyboard.Completed += (sender, e) => _logButton.IsEnabled = true;
+            
         }
 
         public Button LogsButton => _logButton;

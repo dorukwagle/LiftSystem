@@ -2,6 +2,7 @@ using System;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
 using LiftSystem.interfaces;
 
@@ -17,9 +18,17 @@ namespace LiftSystem.views
         private Image leftDoor;
         private Image rightDoor;
         
+        private ScaleTransform leftDoorAnimation;
+        private ScaleTransform rightDoorAmination;
+        private int leftDoorPosition = 75;
+        private int animationDuration = 1;
+        
         public FloorView(int width, int height)
         {
-            var leftDoorPosition = 75;
+            var liftDoorWidth = 100;
+
+            var doorOpened = false;
+            
             _canvas = new Canvas();
             _canvas.Width = width / 2;
             _canvas.Height = height / 2 - 5;
@@ -35,7 +44,6 @@ namespace LiftSystem.views
             var buttonStyle = new Style(typeof(Button));
             buttonStyle.Resources.Add(typeof(Border), borderStyle);
             
-            
             var floor = AddImage(_canvas, "pack://application:,,,/res/LiftFloor.png");
             floor.Width = _canvas.Width;
 
@@ -45,6 +53,21 @@ namespace LiftSystem.views
             callLift.Background = null;
             callLift.Style = buttonStyle;
             callLift.Width = 55;
+            callLift.Click += (sender, args) =>
+            {
+                if (!doorOpened)
+                {
+                    OpenLeftDoor();
+                    OpenRightDoor();
+                }
+                else
+                {
+                    CloseLeftDoor();
+                    CloseRightDoor();
+                }
+
+                doorOpened = !doorOpened;
+            };
             callLift.BorderThickness = new Thickness(0);
             Canvas.SetTop(callLift, _canvas.Height/2);
             Canvas.SetLeft(callLift, 320);
@@ -79,10 +102,13 @@ namespace LiftSystem.views
             }
 
             leftDoor = AddImage(_canvas, "pack://application:,,,/res/LiftFloorLeftDoor.png", 
-                99, _canvas.Height - 100, leftDoorPosition, 87);
+                liftDoorWidth, _canvas.Height - 100, leftDoorPosition, 87);
             
             rightDoor = AddImage(_canvas, "pack://application:,,,/res/LiftFloorRightDoor.png",
-                100, _canvas.Height - 100, leftDoorPosition + 92, 87);
+                liftDoorWidth, _canvas.Height - 100, leftDoorPosition + 92, 87);
+            
+            SetupLeftDoorAnimation();
+            SetupRightDoorAnimation();
         }
         
         private Image AddImage(Panel panel, string uri)
@@ -126,25 +152,41 @@ namespace LiftSystem.views
             return image;
         }
 
+        private void SetupLeftDoorAnimation()
+        {
+            leftDoorAnimation = new ScaleTransform();
+            leftDoor.RenderTransform = leftDoorAnimation;
+        }
+
+        private void SetupRightDoorAnimation()
+        {
+            rightDoorAmination = new ScaleTransform();
+            rightDoor.RenderTransform = rightDoorAmination;
+            rightDoor.RenderTransformOrigin = new Point(1, 0);
+        }
 
         public void OpenLeftDoor()
         {
-            throw new NotImplementedException();
+            var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(animationDuration));
+            leftDoorAnimation.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
         public void OpenRightDoor()
         {
-            throw new NotImplementedException();
+            var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(animationDuration));
+            rightDoorAmination.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
         public void CloseLeftDoor()
         {
-            throw new NotImplementedException();
+            var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(animationDuration));
+            leftDoorAnimation.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
         public void CloseRightDoor()
         {
-            throw new NotImplementedException();
+            var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(animationDuration));
+            rightDoorAmination.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
         public Canvas GetView() => _canvas;
