@@ -62,6 +62,16 @@ namespace LiftSystem.Properties {
         /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
+        internal static System.Drawing.Bitmap CallButton {
+            get {
+                object obj = ResourceManager.GetObject("CallButton", resourceCulture);
+                return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Drawing.Bitmap.
+        /// </summary>
         internal static System.Drawing.Bitmap LiftFloor {
             get {
                 object obj = ResourceManager.GetObject("LiftFloor", resourceCulture);

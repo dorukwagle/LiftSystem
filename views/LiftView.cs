@@ -30,7 +30,7 @@ namespace LiftSystem.views
             _shaftPanel = new Canvas();
             _shaftPanel.Height = height; 
             _shaftPanel.Width = _shaftWidth;
-            _shaftPanel.Background = new SolidColorBrush(Colors.Aqua);
+            // _shaftPanel.Background = new SolidColorBrush(Colors.Aqua);
             panel.Children.Add(_shaftPanel);
         }
 
