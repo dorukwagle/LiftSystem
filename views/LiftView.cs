@@ -1,18 +1,5 @@
-using System;
-using System.ComponentModel;
-using System.Drawing.Printing;
-using System.IO;
-using System.Reflection;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Interop;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
 using LiftSystem.interfaces;
-using Microsoft.Win32.SafeHandles;
-using Color = System.Drawing.Color;
 
 namespace LiftSystem.views
 {
@@ -20,18 +7,28 @@ namespace LiftSystem.views
     {
         private static int floorCount = 0;
         
-        private Canvas _shaftPanel;
+        private StackPanel _shaftPanel;
         private int _shaftWidth;
         
         public LiftView(StackPanel panel, int width, int height)
         {
             _shaftWidth = (int)(width * 0.6);
 
-            _shaftPanel = new Canvas();
-            _shaftPanel.Height = height; 
-            _shaftPanel.Width = _shaftWidth;
+            var scroller = new ScrollViewer();
+            scroller.Height = height;
+            scroller.Width = _shaftWidth;
+            scroller.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scroller.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            
+            _shaftPanel = new StackPanel();
+            // _shaftPanel.Height = 1200;
+            
+            // _shaftPanel.Height = height; 
+            // _shaftPanel.Width = _shaftWidth;
             // _shaftPanel.Background = new SolidColorBrush(Colors.Aqua);
-            panel.Children.Add(_shaftPanel);
+            
+            scroller.Content = _shaftPanel;
+            panel.Children.Add(scroller);
         }
 
         public void AddFloor(IFloorView floor)

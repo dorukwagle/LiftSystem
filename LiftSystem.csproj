@@ -35,6 +35,9 @@
   <ItemGroup>
     <Compile Include="Constants.cs" />
     <Compile Include="controllers\CarController.cs" />
+    <Compile Include="controllers\Floor1.cs" />
+    <Compile Include="controllers\Floor2.cs" />
+    <Compile Include="controllers\Floor3.cs" />
     <Compile Include="controllers\LiftController.cs" />
     <Compile Include="controllers\LogsController.cs" />
     <Compile Include="interfaces\IFloor.cs" />

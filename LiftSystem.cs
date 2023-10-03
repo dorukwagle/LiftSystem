@@ -1,9 +1,7 @@
 ﻿using System;
-using System.Runtime.CompilerServices;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Media;
 using LiftSystem.controllers;
+using LiftSystem.interfaces;
 // using LiftSystem.controllers;
 using LiftSystem.views;
 
@@ -20,17 +18,14 @@ namespace LiftSystem
             var baseView = new BaseView();
             var logsView = new LogsView(baseView.LeftPanel, baseView.LeftPanelWidth, baseView.PanelHeight);
             var liftView = new LiftView(baseView.RightPanel, baseView.RightPanelWidth, baseView.PanelHeight);
-            
-            _ = new LiftController(liftView, baseView.RightPanelWidth, baseView.PanelHeight);
+
+            IFloor[] floors = { new Floor1(), new Floor2() };
+
+            _ = new LiftController(floors, liftView, baseView.RightPanelWidth, baseView.PanelHeight);
             _ = new LogsController(logsView);
             
             app.Run(baseView);
             
-            /*
-             * LiftView has addFloor method
-             * LiftController creates new FloorView() and adds it to the liftview
-             * LiftController then sends the floovView instance to the Floor()
-             */
         }
     }
 }

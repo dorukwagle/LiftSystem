@@ -1,6 +1,5 @@
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Media;
 
 namespace LiftSystem.views
 {
@@ -18,11 +17,10 @@ namespace LiftSystem.views
         
         public BaseView()
         {
-            
             WindowState = WindowState.Maximized;
+            ResizeMode = ResizeMode.NoResize;
             Width = _fullWidth;
             Height = _fullHeight;
-            ResizeMode = ResizeMode.NoResize;
             
             Title = "Lift System";
             InitializeComponents();

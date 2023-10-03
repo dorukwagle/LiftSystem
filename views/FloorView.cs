@@ -10,13 +10,13 @@ namespace LiftSystem.views
 {
     public class FloorView : IFloorView
     {
-        private Canvas _canvas;
-        private Label wallPanel;
-        private Label numPadPanel;
-        private Button callLift;
-        private Button[] numPad;
-        private Image leftDoor;
-        private Image rightDoor;
+        private readonly Canvas _canvas;
+        private readonly Label wallPanel;
+        private readonly Label numPadPanel;
+        private readonly Button callLift;
+        private readonly Button[] numPad;
+        private readonly Image leftDoor;
+        private readonly Image rightDoor;
         
         private ScaleTransform leftDoorAnimation;
         private ScaleTransform rightDoorAmination;
@@ -26,8 +26,6 @@ namespace LiftSystem.views
         public FloorView(int width, int height)
         {
             var liftDoorWidth = 100;
-
-            var doorOpened = false;
             
             _canvas = new Canvas();
             _canvas.Width = width / 2;
@@ -55,18 +53,6 @@ namespace LiftSystem.views
             callLift.Width = 55;
             callLift.Click += (sender, args) =>
             {
-                if (!doorOpened)
-                {
-                    OpenLeftDoor();
-                    OpenRightDoor();
-                }
-                else
-                {
-                    CloseLeftDoor();
-                    CloseRightDoor();
-                }
-
-                doorOpened = !doorOpened;
             };
             callLift.BorderThickness = new Thickness(0);
             Canvas.SetTop(callLift, _canvas.Height/2);
