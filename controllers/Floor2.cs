@@ -4,6 +4,11 @@ namespace LiftSystem.controllers
 {
     public class Floor2 : IFloor
     {
+        public override void InitializeFloor()
+        {
+            throw new System.NotImplementedException();
+        }
+
         public override void LogRequest()
         {
             throw new System.NotImplementedException();

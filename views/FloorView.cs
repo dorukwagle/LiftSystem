@@ -176,5 +176,7 @@ namespace LiftSystem.views
         }
 
         public Canvas GetView() => _canvas;
+        public Button CallLiftBtn => callLift;
+        public Button[] NumPad => numPad;
     }
 }

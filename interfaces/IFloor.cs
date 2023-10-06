@@ -4,7 +4,7 @@ namespace LiftSystem.interfaces
 {
     public abstract class IFloor
     {
-        private FloorView view;
+        protected FloorView view;
 
         public void OpenDoor()
         {
@@ -22,7 +22,8 @@ namespace LiftSystem.interfaces
         {
             this.view = view;
         }
-        
+
+        public abstract void InitializeFloor();
         public abstract void LogRequest();
         public abstract void LogArrival();
         public abstract void LogDelivery();

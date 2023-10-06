@@ -17,15 +17,9 @@ namespace LiftSystem.views
             var scroller = new ScrollViewer();
             scroller.Height = height;
             scroller.Width = _shaftWidth;
-            scroller.VerticalScrollBarVisibility = ScrollBarVisibility.Auto;
-            scroller.HorizontalScrollBarVisibility = ScrollBarVisibility.Auto;
+            scroller.VerticalScrollBarVisibility = ScrollBarVisibility.Auto; 
             
             _shaftPanel = new StackPanel();
-            // _shaftPanel.Height = 1200;
-            
-            // _shaftPanel.Height = height; 
-            // _shaftPanel.Width = _shaftWidth;
-            // _shaftPanel.Background = new SolidColorBrush(Colors.Aqua);
             
             scroller.Content = _shaftPanel;
             panel.Children.Add(scroller);

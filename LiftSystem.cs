@@ -25,7 +25,6 @@ namespace LiftSystem
             _ = new LogsController(logsView);
             
             app.Run(baseView);
-            
         }
     }
 }

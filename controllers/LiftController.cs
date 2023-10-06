@@ -8,7 +8,7 @@ namespace LiftSystem.controllers
     {
         public LiftController(IFloor[] floors, LiftView liftView, int width, int height)
         {
-            for (var i = 0; i < floors.Length; ++i)
+            for (var i = floors.Length - 1; i >= 0; --i)
             {
                 var floor = new FloorView(width, height);
                 liftView.AddFloor(floor);
