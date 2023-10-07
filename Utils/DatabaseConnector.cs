@@ -20,6 +20,10 @@ namespace LiftSystem
             _connection.Open();
             return _command;
         }
-        
+
+        public static void CloseConnection()
+        {
+            _connection.Close();
+        }
     }
 }

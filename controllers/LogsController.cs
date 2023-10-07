@@ -3,6 +3,8 @@ using System.Threading;
 using System.Windows;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
+using LiftSystem.DTO;
+using LiftSystem.Model;
 using LiftSystem.views;
 
 namespace LiftSystem.controllers
@@ -26,8 +28,14 @@ namespace LiftSystem.controllers
             view.HideLogsPanelOnStartup();
             
             // add some random values to the logs
-            for (var i = 100; i < 200; ++i)
-                _logs.Items.Add(i + " Hello test");
+            LogsEventEmitter.Instance.AddOnLog((id, msg) =>
+                _logs.Items.Insert(0, $"{id} {msg}"));
+            
+            foreach (var log in new LiftModel().GetAllLogs())
+            {
+                var tmp = (Log)log;
+                _logs.Items.Add($"{tmp.Id} {tmp.Message}");
+            }
         }
         
         private void AddEventHandlers()

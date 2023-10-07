@@ -21,8 +21,8 @@ namespace LiftSystem
 
             IFloor[] floors = { new Floor1(), new Floor2() };
 
+            _ = new LogsController(logsView); // set before LiftController : order matters
             _ = new LiftController(floors, liftView, baseView.RightPanelWidth, baseView.PanelHeight);
-            _ = new LogsController(logsView);
             
             app.Run(baseView);
         }

@@ -33,7 +33,6 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="controllers\CarController.cs" />
     <Compile Include="controllers\Floor1.cs" />
     <Compile Include="controllers\Floor2.cs" />
     <Compile Include="controllers\LiftController.cs" />
@@ -51,6 +50,7 @@
     </Compile>
     <Compile Include="Utils\Constants.cs" />
     <Compile Include="Utils\DatabaseConnector.cs" />
+    <Compile Include="Utils\LogsEventEmitter.cs" />
     <Compile Include="views\ButtonEllipsis.cs">
       <SubType>Component</SubType>
     </Compile>
