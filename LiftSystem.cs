@@ -12,7 +12,6 @@ namespace LiftSystem
         [STAThread]
         public static void Main()
         {
-            
             var app = new Application();
             
             var baseView = new BaseView();

@@ -7,7 +7,6 @@ namespace LiftSystem
     public class LogsEventEmitter
     {
         private List<Action<int, string>> callbacks = new List<Action<int, string>>();
-        private BackgroundWorker worker = new BackgroundWorker();
 
         private static LogsEventEmitter instance;
 
@@ -28,6 +27,7 @@ namespace LiftSystem
 
         public void EmitLog(int id, string message)
         {
+            var worker = new BackgroundWorker();
             worker.DoWork += (sender, args) =>
                 {
                     foreach (var callback in callbacks)

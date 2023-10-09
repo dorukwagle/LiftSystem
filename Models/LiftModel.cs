@@ -10,7 +10,7 @@ namespace LiftSystem.Model
         private MySqlCommand _command;
 
         public void Log(string msg)
-        {
+        { 
             _command = DatabaseConnector.GetConnection();
             
             _command.CommandText = @"insert into logs(message) values(@msg);";
@@ -18,6 +18,7 @@ namespace LiftSystem.Model
             _command.ExecuteNonQuery();
             
             DatabaseConnector.CloseConnection();
+            LogsEventEmitter.Instance.EmitLog((int)_command.LastInsertedId, msg);
             LogsEventEmitter.Instance.EmitLog((int)_command.LastInsertedId, msg);
         }
 

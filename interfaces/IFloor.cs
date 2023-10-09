@@ -28,5 +28,6 @@ namespace LiftSystem.interfaces
         public abstract void LogArrival();
         public abstract void LogDelivery();
         public abstract void UpdateDisplay();
+        public abstract int GetFloorNumber();
     }
 }

@@ -28,5 +28,7 @@ namespace LiftSystem.controllers
         {
             throw new System.NotImplementedException();
         }
+
+        public override int GetFloorNumber() => 2;
     }
 }
