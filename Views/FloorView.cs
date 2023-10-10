@@ -46,7 +46,7 @@ namespace LiftSystem.views
             var numPadLeft = _canvas.Width / 2 - 42;
             var numPadTop = _canvas.Height / 2 - 50;
             
-            numPad = new Button[2];
+            numPad = new Button[Constants.Floors.Length];
             
             var borderStyle = new Style(typeof(Border));
             borderStyle.Setters.Add(new Setter(Border.CornerRadiusProperty, new CornerRadius(200)));
@@ -80,6 +80,14 @@ namespace LiftSystem.views
             Canvas.SetTop(numPadPanel, numPadTop);
             _canvas.Children.Add(numPadPanel);
 
+            var numpadContainer = new WrapPanel();
+            numpadContainer.Width = 150;
+            numpadContainer.HorizontalAlignment = HorizontalAlignment.Left;
+            numpadContainer.VerticalAlignment = VerticalAlignment.Top;
+            Canvas.SetTop(numpadContainer, numPadTop + numPadPanel.Height);
+            Canvas.SetLeft(numpadContainer, numPadLeft - 20);
+            _canvas.Children.Add(numpadContainer);
+            
             for (var i = 0; i < numPad.Length; ++i)
             {
                 numPad[i] = new Button()
@@ -92,9 +100,7 @@ namespace LiftSystem.views
                     FontWeight = FontWeights.Bold
                 };
                 
-                Canvas.SetTop(numPad[i], numPadTop + numPadPanel.Height + 5 + i * 25);
-                Canvas.SetLeft(numPad[i], numPadLeft + 10);
-                _canvas.Children.Add(numPad[i]);
+                numpadContainer.Children.Add(numPad[i]);
             }
 
             IndicatorLabel = new TextBlock();
@@ -121,16 +127,6 @@ namespace LiftSystem.views
             SetupLeftDoorAnimation();
             SetupRightDoorAnimation();
             SetupLiftIndicatorAnimation();
-
-            var thread = new Thread(o =>
-            {
-                Thread.Sleep(2000);
-                PlayLiftDownIndicator();
-                // PlayLiftUpIndicator();
-                Thread.Sleep(5000);
-                StopIndicator();
-            });
-            thread.Start();
         }
         
         private Image AddImage(Panel panel, string uri)
