@@ -1,3 +1,4 @@
+using System;
 using System.ComponentModel;
 using System.Threading;
 using System.Windows.Media.TextFormatting;
@@ -24,6 +25,7 @@ namespace LiftSystem.controllers
                 var floor = new FloorView(width, height);
                 liftView.AddFloor(floor);
                 floors[i].SetView(floor);
+                floors[i].InitializeFloor();
             }
             
             InitializeLift();
@@ -49,6 +51,9 @@ namespace LiftSystem.controllers
 
         private void StartMainLoop()
         {
+            var oneSec = new Thread(o => Thread.Sleep(1000));
+            var threeSec = new Thread(o => Thread.Sleep(3000));
+            
             while (!Schedule.IsEmpty)
             {
                 if (LiftState.Direction == LiftDirection.Up && !IsLastFloor(LiftState.CurrentFloor))
@@ -58,9 +63,11 @@ namespace LiftSystem.controllers
                         LiftState.Status = LiftStatus.Paused;
                         LiftEventsEmitter.EmitMotionStateChange(LiftStatus.Paused, LiftDirection.Up);
                         LiftState.CurrentFloor.LogArrival();
-                        Thread.Sleep(1000);
+                        oneSec.Start();
+                        oneSec.Join();
                         LiftState.CurrentFloor.OpenDoor();
-                        Thread.Sleep(3000);
+                        threeSec.Start();
+                        threeSec.Join();
                         LiftState.CurrentFloor.CloseDoor();
                         LiftState.Status = LiftStatus.Moving;
                     }
@@ -76,9 +83,11 @@ namespace LiftSystem.controllers
                         LiftState.Status = LiftStatus.Paused;
                         LiftEventsEmitter.EmitMotionStateChange(LiftStatus.Paused, LiftDirection.Down);
                         LiftState.CurrentFloor.LogArrival();
-                        Thread.Sleep(1000);
+                        oneSec.Start();
+                        oneSec.Join();
                         LiftState.CurrentFloor.OpenDoor();
-                        Thread.Sleep(3000);
+                        threeSec.Start();
+                        threeSec.Join();
                         LiftState.CurrentFloor.CloseDoor();
                         LiftState.Status = LiftStatus.Moving;
                     }
@@ -92,9 +101,11 @@ namespace LiftSystem.controllers
                         LiftState.Status = LiftStatus.Paused;
                         LiftEventsEmitter.EmitMotionStateChange(LiftStatus.Paused, LiftDirection.Down);
                         LiftState.CurrentFloor.LogArrival();
-                        Thread.Sleep(1000);
+                        oneSec.Start();
+                        oneSec.Join();
                         LiftState.CurrentFloor.OpenDoor();
-                        Thread.Sleep(3000);
+                        threeSec.Start();
+                        threeSec.Join();
                         LiftState.CurrentFloor.CloseDoor();
                         LiftState.Status = LiftStatus.Moving;
                     }
@@ -110,16 +121,18 @@ namespace LiftSystem.controllers
                         LiftState.Status = LiftStatus.Paused;
                         LiftEventsEmitter.EmitMotionStateChange(LiftStatus.Paused, LiftDirection.Up);
                         LiftState.CurrentFloor.LogArrival();
-                        Thread.Sleep(1000);
+                        oneSec.Start();
+                        oneSec.Join();
                         LiftState.CurrentFloor.OpenDoor();
-                        Thread.Sleep(3000);
+                        threeSec.Start();
+                        threeSec.Join();
                         LiftState.CurrentFloor.CloseDoor();
                         LiftState.Status = LiftStatus.Moving;
                     }
                     MoveLiftUp();
                 }
             }
-
+            Console.WriteLine("running main loop");
             LiftState.Status = LiftStatus.Stopped;
         }
 

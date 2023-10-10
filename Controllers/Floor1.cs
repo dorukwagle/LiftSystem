@@ -1,35 +1,29 @@
+using System;
+using System.Windows.Controls;
+using LiftSystem.Enums;
 using LiftSystem.interfaces;
+using LiftSystem.Model;
 
 namespace LiftSystem.controllers
 {
     public class Floor1 : IFloor
     {
-        public override void InitializeFloor()
+        public override void SubscribeLiftEvents()
         {
-            var callBtn = view.CallLiftBtn;
-            
+            LiftEventsEmitter.AddOnFloorChange(floor => view.WallPanelLabel = LiftState.CurrentFloor.GetFloorNumber().ToString());
+            LiftEventsEmitter.AddOnMotionStateChange((status, direction) => {});
         }
 
         public override void LogRequest()
         {
-            throw new System.NotImplementedException();
+           new LiftModel().Log("Request received for floor 1");
         }
 
         public override void LogArrival()
         {
-            throw new System.NotImplementedException();
+            new LiftModel().Log("Lift Arrived at floor 1");
         }
-
-        public override void LogDelivery()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void UpdateDisplay()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public override int GetFloorNumber() => 1;
     }
 }

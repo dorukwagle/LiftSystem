@@ -1,9 +1,13 @@
 using System;
+using System.ComponentModel;
+using System.Threading;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Animation;
 using System.Windows.Media.Imaging;
+using System.Windows.Threading;
 using LiftSystem.interfaces;
 
 namespace LiftSystem.views
@@ -22,10 +26,16 @@ namespace LiftSystem.views
         private ScaleTransform rightDoorAmination;
         private int leftDoorPosition = 75;
         private int animationDuration = 1;
+        private TextBlock IndicatorLabel;
+
+        private BackgroundWorker IndicatorUp;
+        private BackgroundWorker IndicatorDown;
         
         public FloorView(int width, int height)
         {
             var liftDoorWidth = 100;
+            IndicatorUp = new BackgroundWorker();
+            IndicatorDown = new BackgroundWorker();
             
             _canvas = new Canvas();
             _canvas.Width = width / 2;
@@ -87,14 +97,39 @@ namespace LiftSystem.views
                 _canvas.Children.Add(numPad[i]);
             }
 
+            IndicatorLabel = new TextBlock();
+            IndicatorLabel.Width = 55;
+            IndicatorLabel.Height = 205;
+            IndicatorLabel.Background = new SolidColorBrush(Colors.Black);
+            IndicatorLabel.Foreground = new SolidColorBrush(Colors.Red);
+            IndicatorLabel.TextAlignment = TextAlignment.Center;
+            // IndicatorLabel.TextTrimming = TextTrimming.CharacterEllipsis;
+            IndicatorLabel.TextWrapping = TextWrapping.Wrap;
+            IndicatorLabel.FontSize = 40;
+            Canvas.SetTop(IndicatorLabel, 200);
+            
+            _canvas.Children.Add(IndicatorLabel);
+
             leftDoor = AddImage(_canvas, "pack://application:,,,/res/LiftFloorLeftDoor.png", 
                 liftDoorWidth, _canvas.Height - 100, leftDoorPosition, 87);
             
             rightDoor = AddImage(_canvas, "pack://application:,,,/res/LiftFloorRightDoor.png",
                 liftDoorWidth, _canvas.Height - 100, leftDoorPosition + 92, 87);
             
+            
+            
             SetupLeftDoorAnimation();
             SetupRightDoorAnimation();
+            SetupLiftIndicatorAnimation();
+
+            var thread = new Thread(o =>
+            {
+                Thread.Sleep(2000);
+                PlayLiftDownIndicator();
+                // Thread.Sleep(10000);
+                // PlayLiftUpIndicator();
+            });
+            thread.Start();
         }
         
         private Image AddImage(Panel panel, string uri)
@@ -151,6 +186,82 @@ namespace LiftSystem.views
             rightDoor.RenderTransformOrigin = new Point(1, 0);
         }
 
+        private void SetupLiftIndicatorAnimation()
+        {
+            void updatePreIndicator(string blackText, string redText)
+            {
+                IndicatorLabel.Dispatcher.Invoke(() => IndicatorLabel.Text = "");
+                IndicatorLabel.Dispatcher.Invoke(() => IndicatorLabel.Inlines.Add(new Run(blackText) {Foreground = Brushes.Black}));
+                IndicatorLabel.Dispatcher.Invoke(() => IndicatorLabel.Inlines.Add(new Run(redText){Foreground = Brushes.Red}));
+            }
+            void updatePostIndicator(string blackText, string redText)
+            {
+                IndicatorLabel.Dispatcher.Invoke(() => IndicatorLabel.Text = "");
+                IndicatorLabel.Dispatcher.Invoke(() => IndicatorLabel.Inlines.Add(new Run(redText){Foreground = Brushes.Red}));
+                IndicatorLabel.Dispatcher.Invoke(() => IndicatorLabel.Inlines.Add(new Run(blackText) {Foreground = Brushes.Black}));
+            }
+            
+            const int delay = 500;
+            IndicatorUp.DoWork += (sender, args) =>
+            {
+                while (true)
+                {
+                    updatePreIndicator("🢁 🢁 🢁 ","🢁");
+                    Thread.Sleep(delay);
+                    updatePreIndicator("🢁 🢁 ", "🢁 🢁");
+                    Thread.Sleep(delay);
+                    updatePreIndicator("🢁 ", "🢁 🢁 🢁");
+                    Thread.Sleep(delay);
+                    updatePreIndicator("", "🢁 🢁 🢁 🢁");
+                    Thread.Sleep(delay);
+                    updatePostIndicator("🢁", "🢁 🢁 🢁");
+                    Thread.Sleep(delay);
+                    updatePostIndicator("🢁 🢁 ", "🢁 🢁");
+                    Thread.Sleep(delay);
+                    updatePostIndicator("🢁 🢁 🢁 ", "🢁");
+                    Thread.Sleep(delay);
+                }
+            };
+
+            IndicatorDown.DoWork += (sender, args) =>
+            {
+                while (true)
+                {
+                    updatePostIndicator("🢃", " 🢃 🢃 🢃");
+                    Thread.Sleep(delay);
+                    updatePostIndicator("🢃 🢃", " 🢃 🢃");
+                    Thread.Sleep(delay);
+                    updatePostIndicator("🢃 🢃 🢃", " 🢃");
+                    Thread.Sleep(delay);
+                    updatePostIndicator("", "🢃 🢃 🢃 🢃");
+                    Thread.Sleep(delay);
+                    updatePreIndicator("🢃", " 🢃 🢃 🢃");
+                    Thread.Sleep(delay);
+                    updatePreIndicator("🢃 🢃", " 🢃 🢃");
+                    Thread.Sleep(delay);
+                    updatePreIndicator("🢃 🢃 🢃", " 🢃");
+                    Thread.Sleep(delay);
+                }
+            };
+        }
+
+        public void PlayLiftDownIndicator()
+        {
+            IndicatorDown.RunWorkerAsync();
+        }
+
+
+        public void PlayLiftUpIndicator() => IndicatorUp.RunWorkerAsync();
+
+        public void StopIndicator()
+        {
+            if (IndicatorUp.IsBusy)
+                IndicatorUp.CancelAsync();
+            if(IndicatorDown.IsBusy)
+                IndicatorDown.CancelAsync();
+            IndicatorLabel.Text = "";
+        }
+
         public void OpenLeftDoor()
         {
             var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(animationDuration));
@@ -178,5 +289,10 @@ namespace LiftSystem.views
         public Canvas GetView() => _canvas;
         public Button CallLiftBtn => callLift;
         public Button[] NumPad => numPad;
+
+        public string WallPanelLabel
+        {
+            set => wallPanel.Content = "Floor: " + value;
+        }
     }
 }

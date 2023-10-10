@@ -1,34 +1,27 @@
+using LiftSystem.DTO;
 using LiftSystem.interfaces;
+using LiftSystem.Model;
 
 namespace LiftSystem.controllers
 {
     public class Floor2 : IFloor
     {
-        public override void InitializeFloor()
+        public override void SubscribeLiftEvents()
         {
-            throw new System.NotImplementedException();
+            LiftEventsEmitter.AddOnFloorChange(floor => view.WallPanelLabel = LiftState.CurrentFloor.GetFloorNumber().ToString());
+            LiftEventsEmitter.AddOnMotionStateChange((status, direction) => {});
         }
 
         public override void LogRequest()
         {
-            throw new System.NotImplementedException();
+            new LiftModel().Log("Request received for floor 2");
         }
 
         public override void LogArrival()
         {
-            throw new System.NotImplementedException();
+            new LiftModel().Log("Lift Arrived at floor 2");
         }
-
-        public override void LogDelivery()
-        {
-            throw new System.NotImplementedException();
-        }
-
-        public override void UpdateDisplay()
-        {
-            throw new System.NotImplementedException();
-        }
-
+        
         public override int GetFloorNumber() => 2;
     }
 }

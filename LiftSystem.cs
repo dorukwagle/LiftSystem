@@ -18,10 +18,8 @@ namespace LiftSystem
             var logsView = new LogsView(baseView.LeftPanel, baseView.LeftPanelWidth, baseView.PanelHeight);
             var liftView = new LiftView(baseView.RightPanel, baseView.RightPanelWidth, baseView.PanelHeight);
 
-            IFloor[] floors = { new Floor1(), new Floor2() };
-
             _ = new LogsController(logsView); // set before LiftController : order matters
-            _ = new LiftController(floors, liftView, baseView.RightPanelWidth, baseView.PanelHeight);
+            _ = new LiftController(Constants.Floors, liftView, baseView.RightPanelWidth, baseView.PanelHeight);
             
             app.Run(baseView);
         }

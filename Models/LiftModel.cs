@@ -13,8 +13,7 @@ namespace LiftSystem.Model
         { 
             _command = DatabaseConnector.GetConnection();
             
-            _command.CommandText = @"insert into logs(message) values(@msg);";
-            _command.Parameters.AddWithValue("@msg", msg);
+            _command.CommandText = $"insert into logs(message) values('{msg}');";
             _command.ExecuteNonQuery();
             
             DatabaseConnector.CloseConnection();
