@@ -36,6 +36,8 @@ namespace LiftSystem.views
             var liftDoorWidth = 100;
             IndicatorUp = new BackgroundWorker();
             IndicatorDown = new BackgroundWorker();
+            IndicatorDown.WorkerSupportsCancellation = true;
+            IndicatorUp.WorkerSupportsCancellation = true;
             
             _canvas = new Canvas();
             _canvas.Width = width / 2;
@@ -61,9 +63,7 @@ namespace LiftSystem.views
             callLift.Background = null;
             callLift.Style = buttonStyle;
             callLift.Width = 55;
-            callLift.Click += (sender, args) =>
-            {
-            };
+            
             callLift.BorderThickness = new Thickness(0);
             Canvas.SetTop(callLift, _canvas.Height/2);
             Canvas.SetLeft(callLift, 320);
@@ -126,8 +126,9 @@ namespace LiftSystem.views
             {
                 Thread.Sleep(2000);
                 PlayLiftDownIndicator();
-                // Thread.Sleep(10000);
                 // PlayLiftUpIndicator();
+                Thread.Sleep(5000);
+                StopIndicator();
             });
             thread.Start();
         }
@@ -201,10 +202,10 @@ namespace LiftSystem.views
                 IndicatorLabel.Dispatcher.Invoke(() => IndicatorLabel.Inlines.Add(new Run(blackText) {Foreground = Brushes.Black}));
             }
             
-            const int delay = 500;
+            const int delay = 100;
             IndicatorUp.DoWork += (sender, args) =>
             {
-                while (true)
+                while (!IndicatorUp.CancellationPending)
                 {
                     updatePreIndicator("🢁 🢁 🢁 ","🢁");
                     Thread.Sleep(delay);
@@ -221,27 +222,29 @@ namespace LiftSystem.views
                     updatePostIndicator("🢁 🢁 🢁 ", "🢁");
                     Thread.Sleep(delay);
                 }
+                updatePostIndicator("", "");
             };
 
             IndicatorDown.DoWork += (sender, args) =>
             {
-                while (true)
+                while (!IndicatorDown.CancellationPending)
                 {
-                    updatePostIndicator("🢃", " 🢃 🢃 🢃");
+                    updatePostIndicator("🢃🢃🢃", "🢃");
                     Thread.Sleep(delay);
-                    updatePostIndicator("🢃 🢃", " 🢃 🢃");
+                    updatePostIndicator("🢃🢃", "🢃🢃");
                     Thread.Sleep(delay);
-                    updatePostIndicator("🢃 🢃 🢃", " 🢃");
+                    updatePostIndicator("🢃", "🢃🢃🢃");
                     Thread.Sleep(delay);
-                    updatePostIndicator("", "🢃 🢃 🢃 🢃");
+                    updatePostIndicator("", "🢃🢃🢃🢃");
                     Thread.Sleep(delay);
-                    updatePreIndicator("🢃", " 🢃 🢃 🢃");
+                    updatePreIndicator("🢃", "🢃🢃🢃");
                     Thread.Sleep(delay);
-                    updatePreIndicator("🢃 🢃", " 🢃 🢃");
+                    updatePreIndicator("🢃🢃", "🢃🢃");
                     Thread.Sleep(delay);
-                    updatePreIndicator("🢃 🢃 🢃", " 🢃");
+                    updatePreIndicator("🢃🢃🢃", "🢃");
                     Thread.Sleep(delay);
                 }
+                updatePostIndicator("", "");
             };
         }
 
@@ -255,11 +258,10 @@ namespace LiftSystem.views
 
         public void StopIndicator()
         {
-            if (IndicatorUp.IsBusy)
+            // if (IndicatorUp.IsBusy)
                 IndicatorUp.CancelAsync();
-            if(IndicatorDown.IsBusy)
+            // if(IndicatorDown.IsBusy)
                 IndicatorDown.CancelAsync();
-            IndicatorLabel.Text = "";
         }
 
         public void OpenLeftDoor()
