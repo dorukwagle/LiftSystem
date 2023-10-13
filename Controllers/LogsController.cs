@@ -28,8 +28,8 @@ namespace LiftSystem.controllers
             view.HideLogsPanelOnStartup();
             
             // add some random values to the logs
-            LogsEventEmitter.Instance.AddOnLog((id, msg) =>
-                _logs.Items.Insert(0, $"{id} {msg}"));
+            LogsEventEmitter.AddOnLog((id, msg) =>
+                _logs.Dispatcher.Invoke(() => _logs.Items.Insert(0, $"{id} {msg}")));
             
             foreach (var log in new LiftModel().GetAllLogs())
             {

@@ -6,28 +6,15 @@ using System.Windows.Documents;
 
 namespace LiftSystem
 {
-    public class ScheduleEventEmitter
+    public static class ScheduleEventEmitter
     {
         // events for schedule update i.e. when user clicks floor buttons. so as to stop the lift
+
+        private static List<Action> scheduleUpdateCallbacks = new List<Action>();
         
-        private static ScheduleEventEmitter instance;
+        public static void AddOnScheduleUpdate(Action callback) => scheduleUpdateCallbacks.Add(callback);
 
-        private List<Action> scheduleUpdateCallbacks = new List<Action>();
-        
-        private ScheduleEventEmitter() {}
-
-        public static ScheduleEventEmitter Instance {
-            get
-            {
-                if (instance == null)
-                    instance = new ScheduleEventEmitter();
-                return instance;
-            }
-        }
-
-        public void AddOnScheduleUpdate(Action callback) => scheduleUpdateCallbacks.Add(callback);
-
-        public void EmitScheduleUpdate()
+        public static void EmitScheduleUpdate()
         {
             var worker = new BackgroundWorker();
             worker.DoWork += (sender, args) =>

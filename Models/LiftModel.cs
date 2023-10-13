@@ -17,8 +17,7 @@ namespace LiftSystem.Model
             _command.ExecuteNonQuery();
             
             DatabaseConnector.CloseConnection();
-            LogsEventEmitter.Instance.EmitLog((int)_command.LastInsertedId, msg);
-            LogsEventEmitter.Instance.EmitLog((int)_command.LastInsertedId, msg);
+            LogsEventEmitter.EmitLog((int)_command.LastInsertedId, msg);
         }
 
         public ArrayList GetAllLogs()

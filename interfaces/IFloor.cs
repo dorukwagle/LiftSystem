@@ -1,4 +1,6 @@
 using System;
+using System.Drawing.Printing;
+using System.Windows;
 using System.Windows.Controls;
 using LiftSystem.Enums;
 using LiftSystem.Model;
@@ -13,15 +15,21 @@ namespace LiftSystem.interfaces
 
         public void OpenDoor()
         {
-            view.OpenLeftDoor();
-            view.OpenRightDoor();
+            Application.Current.Dispatcher.Invoke(() => {
+                view.OpenLeftDoor();
+                view.OpenRightDoor();
+            });
             DoorOpen = true;
         }
 
         public void CloseDoor()
         {
-            view.CloseLeftDoor();
-            view.OpenRightDoor();
+            Application.Current.Dispatcher.Invoke(() =>
+            {
+                view.CloseLeftDoor();
+                view.CloseRightDoor();
+            });
+            
             DoorOpen = false;
         }
 
@@ -37,7 +45,7 @@ namespace LiftSystem.interfaces
             
             callBtn.Click += (sender, args) =>
             {
-                if (LiftState.CurrentFloor == this)
+                if (LiftState.CurrentFloor == this && LiftState.Status != LiftStatus.Moving)
                 {
                     if (DoorOpen) return;
                     OpenDoor();
@@ -46,7 +54,7 @@ namespace LiftSystem.interfaces
                 {
                     Schedule.AddSchedule(this);
                     LogRequest();
-                    if (LiftState.Status == LiftStatus.Stopped) ScheduleEventEmitter.Instance.EmitScheduleUpdate();
+                    if (LiftState.Status == LiftStatus.Stopped) ScheduleEventEmitter.EmitScheduleUpdate();
                 }
             };
             
@@ -62,12 +70,34 @@ namespace LiftSystem.interfaces
                     var targetFloor = Constants.Floors[floorNumber - 1];
                     Schedule.AddSchedule(targetFloor);
                     LogRequest();
-                    if (LiftState.Status == LiftStatus.Stopped) ScheduleEventEmitter.Instance.EmitScheduleUpdate();
+                    if (LiftState.Status == LiftStatus.Stopped) ScheduleEventEmitter.EmitScheduleUpdate();
                 };
             }
+            
+            SubscribeLiftEvents();
+        }
+        
+        private void SubscribeLiftEvents()
+        {
+            
+            LiftEventsEmitter.AddOnFloorChange(floor => view.LabelIndicator = LiftState.CurrentFloor.GetFloorNumber().ToString());
+            LiftEventsEmitter.AddOnMotionStateChange((status, direction) =>
+            {
+                if (status != LiftStatus.Moving)
+                {
+                    view.StopIndicator();
+                    return;
+                }
+                
+                if (direction == LiftDirection.Down)
+                    view.PlayLiftDownIndicator();
+                else view.PlayLiftUpIndicator();
+                
+            });
         }
 
-        public abstract void SubscribeLiftEvents();
+        public bool IsDoorOpened => DoorOpen;
+        
         public abstract void LogRequest();
         public abstract void LogArrival();
         public abstract int GetFloorNumber();

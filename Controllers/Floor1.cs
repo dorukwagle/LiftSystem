@@ -8,12 +8,6 @@ namespace LiftSystem.controllers
 {
     public class Floor1 : IFloor
     {
-        public override void SubscribeLiftEvents()
-        {
-            LiftEventsEmitter.AddOnFloorChange(floor => view.WallPanelLabel = LiftState.CurrentFloor.GetFloorNumber().ToString());
-            LiftEventsEmitter.AddOnMotionStateChange((status, direction) => {});
-        }
-
         public override void LogRequest()
         {
            new LiftModel().Log("Request received for floor 1");

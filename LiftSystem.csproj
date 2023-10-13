@@ -12,6 +12,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <Deterministic>true</Deterministic>
+    <LangVersion>7.1</LangVersion>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -35,13 +36,13 @@
   <ItemGroup>
     <Compile Include="Controllers\Floor1.cs" />
     <Compile Include="Controllers\Floor2.cs" />
+    <Compile Include="Controllers\Floor3.cs" />
     <Compile Include="Controllers\LiftController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="DTO\Log.cs" />
     <Compile Include="Enums\LiftDirection.cs" />
     <Compile Include="Enums\LiftStatus.cs" />
     <Compile Include="interfaces\IFloor.cs" />
-    <Compile Include="interfaces\IFloorView.cs" />
     <Compile Include="LiftSystem.cs" />
     <Compile Include="Models\LiftModel.cs" />
     <Compile Include="Models\Schedule.cs" />

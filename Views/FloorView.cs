@@ -25,7 +25,6 @@ namespace LiftSystem.views
         private ScaleTransform leftDoorAnimation;
         private ScaleTransform rightDoorAmination;
         private int leftDoorPosition = 75;
-        private int animationDuration = 1;
         private TextBlock IndicatorLabel;
 
         private BackgroundWorker IndicatorUp;
@@ -172,7 +171,7 @@ namespace LiftSystem.views
 
         private void SetupLeftDoorAnimation()
         {
-            leftDoorAnimation = new ScaleTransform();
+            leftDoorAnimation = new ScaleTransform();   
             leftDoor.RenderTransform = leftDoorAnimation;
         }
 
@@ -254,33 +253,33 @@ namespace LiftSystem.views
 
         public void StopIndicator()
         {
-            // if (IndicatorUp.IsBusy)
+            if (IndicatorUp.IsBusy)
                 IndicatorUp.CancelAsync();
-            // if(IndicatorDown.IsBusy)
+            if(IndicatorDown.IsBusy)
                 IndicatorDown.CancelAsync();
         }
 
         public void OpenLeftDoor()
         {
-            var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(animationDuration));
+            var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(Constants.DoorAnimationDuration));
             leftDoorAnimation.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
         public void OpenRightDoor()
         {
-            var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(animationDuration));
+            var anim = new DoubleAnimation(1, 0, TimeSpan.FromSeconds(Constants.DoorAnimationDuration));
             rightDoorAmination.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
         public void CloseLeftDoor()
         {
-            var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(animationDuration));
+            var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(Constants.DoorAnimationDuration));
             leftDoorAnimation.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
         public void CloseRightDoor()
         {
-            var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(animationDuration));
+            var anim = new DoubleAnimation(0, 1, TimeSpan.FromSeconds(Constants.DoorAnimationDuration));
             rightDoorAmination.BeginAnimation(ScaleTransform.ScaleXProperty, anim);
         }
 
@@ -288,9 +287,17 @@ namespace LiftSystem.views
         public Button CallLiftBtn => callLift;
         public Button[] NumPad => numPad;
 
-        public string WallPanelLabel
+        public string LabelIndicator
         {
-            set => wallPanel.Content = "Floor: " + value;
+            set
+            {
+                var label = "Floor: " + value;
+                wallPanel.Dispatcher.Invoke(() =>
+                {
+                    wallPanel.Content = label;
+                    numPadPanel.Content = label;
+                });
+            }
         }
     }
 }
