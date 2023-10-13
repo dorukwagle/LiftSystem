@@ -15,6 +15,7 @@ namespace LiftSystem.controllers
         private LiftModel model = new LiftModel();
         private IFloor[] floors;
         private int floorTravelDuration = 3; //sec
+        private int liftWaitDuration = 5000; // 5 sec
         
         public LiftController(IFloor[] floors, LiftView liftView, int width, int height)
         {
@@ -52,29 +53,24 @@ namespace LiftSystem.controllers
         private void StartMainLoop()
         {
             const int  shortInterval = 1000;
-            const int longInterval = 5000;
             
             while (!Schedule.IsEmpty)
             {
+                PrepareForMovement();
+                
                 if (LiftState.Direction == LiftDirection.Up)
-                {
-                    PrepareForMovement();
                     MoveLiftUp();
-                }
-                else
-                {
-                    PrepareForMovement();
-                    MoveLiftDown();
-                }
+                else MoveLiftDown();
+                
                 
                 if (!Schedule.Dequeue(LiftState.CurrentFloor)) continue;
                 
-                LiftState.Status = LiftStatus.Paused;
                 LiftEventsEmitter.EmitMotionStateChange(LiftStatus.Paused, LiftState.Direction);
+                LiftState.Status = LiftStatus.Paused;
                 LiftState.CurrentFloor.LogArrival();
                 Thread.Sleep(shortInterval);
                 LiftState.CurrentFloor.OpenDoor();
-                Thread.Sleep(longInterval);
+                WaitForFurtherCommands();
                 LiftState.CurrentFloor.CloseDoor();
                 WaitForDoorClose();
             }
@@ -88,6 +84,7 @@ namespace LiftSystem.controllers
             SimulateLiftMovement();
             LiftState.CurrentFloor = floors[LiftState.CurrentFloor.GetFloorNumber()];
             LiftState.Direction = IsLastFloor(LiftState.CurrentFloor) ? LiftDirection.Down : LiftDirection.Up; 
+            if (IsLastFloor(LiftState.CurrentFloor)) LiftEventsEmitter.EmitMotionStateChange(LiftStatus.Paused, 0);
             LiftEventsEmitter.EmitFloorChange(LiftState.CurrentFloor);
         }
 
@@ -98,6 +95,7 @@ namespace LiftSystem.controllers
             SimulateLiftMovement();
             LiftState.CurrentFloor = floors[LiftState.CurrentFloor.GetFloorNumber() - 2];
             LiftState.Direction = IsFirstFloor(LiftState.CurrentFloor) ? LiftDirection.Up : LiftDirection.Down;
+            if(IsFirstFloor(LiftState.CurrentFloor)) LiftEventsEmitter.EmitMotionStateChange(LiftStatus.Paused, 0);
             LiftEventsEmitter.EmitFloorChange(LiftState.CurrentFloor);
         }
 
@@ -117,6 +115,7 @@ namespace LiftSystem.controllers
         }
 
         private void WaitForDoorClose() => Thread.Sleep(Constants.DoorAnimationDuration * 1000);
+        private void WaitForFurtherCommands() => Thread.Sleep(liftWaitDuration);
         
         private bool IsFirstFloor(IFloor floor) => floors[0] == floor;
         private bool IsLastFloor(IFloor floor) => floors[floors.Length - 1] == floor;
