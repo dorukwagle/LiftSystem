@@ -98,8 +98,8 @@ namespace LiftSystem.interfaces
 
         public bool IsDoorOpened => DoorOpen;
         
-        public abstract void LogRequest();
-        public abstract void LogArrival();
+        private void LogRequest() => new LiftModel().Log($"Request received for floor {GetFloorNumber()}");
+        public void LogArrival() => new LiftModel().Log($"Lift Arrived at floor {GetFloorNumber()}");
         public abstract int GetFloorNumber();
     }
 }
