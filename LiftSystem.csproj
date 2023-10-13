@@ -43,6 +43,7 @@
     <Compile Include="Enums\LiftDirection.cs" />
     <Compile Include="Enums\LiftStatus.cs" />
     <Compile Include="interfaces\IFloor.cs" />
+    <Compile Include="interfaces\IFloorView.cs" />
     <Compile Include="LiftSystem.cs" />
     <Compile Include="Models\LiftModel.cs" />
     <Compile Include="Models\Schedule.cs" />
