@@ -6,18 +6,18 @@ namespace LiftSystem
 {
     public static class LogsEventEmitter
     {
-        private static List<Action<int, string>> callbacks = new List<Action<int, string>>();
+        private static List<Action<int, string, string>> callbacks = new List<Action<int, string, string>>();
 
-        public static void AddOnLog(Action<int, string> fun) => callbacks.Add(fun);
+        public static void AddOnLog(Action<int, string, string> fun) => callbacks.Add(fun);
 
-        public static void EmitLog(int id, string message)
+        public static void EmitLog(int id, string message, string created)
         {
             var worker = new BackgroundWorker();
             worker.DoWork += (sender, args) =>
                 {
                     foreach (var callback in callbacks)
                     {
-                        callback(id, message);
+                        callback(id, message, created);
                     }
                 };
             worker.RunWorkerAsync();

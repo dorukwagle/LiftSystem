@@ -4,11 +4,13 @@ namespace LiftSystem.DTO
     {
         private int id;
         private string message;
+        private string created;
 
-        public Log(int id, string message)
+        public Log(int id, string message, string created)
         {
             this.id = id;
             this.message = message;
+            this.created = created;
         }
 
         public Log(string message)
@@ -19,5 +21,7 @@ namespace LiftSystem.DTO
         public int Id => id;
 
         public string Message => message;
+
+        public string Created => created;
     }
 }

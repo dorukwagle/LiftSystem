@@ -1,4 +1,5 @@
 
+using System;
 using System.Collections;
 using LiftSystem.DTO;
 using MySql.Data.MySqlClient;
@@ -17,7 +18,7 @@ namespace LiftSystem.Model
             _command.ExecuteNonQuery();
             
             DatabaseConnector.CloseConnection();
-            LogsEventEmitter.EmitLog((int)_command.LastInsertedId, msg);
+            LogsEventEmitter.EmitLog((int)_command.LastInsertedId, msg, new DateTime().ToString());
         }
 
         public ArrayList GetAllLogs()
@@ -31,7 +32,8 @@ namespace LiftSystem.Model
             {
                 list.Add(new Log(
                     result.GetInt32("id"),
-                    result.GetString("message")
+                    result.GetString("message"),
+                    result.GetDateTime("created").ToString()
                 ));
             }
             result.Close();
