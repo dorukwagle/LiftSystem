@@ -21,6 +21,12 @@ namespace LiftSystem.Model
             return true;
         }
 
+        public static bool HasHigherFloors(IFloor floor) => 
+            schedule.FindIndex(floor1 => floor1.GetFloorNumber() > floor.GetFloorNumber()) != -1;
+
+        public static bool HasLowerFloors(IFloor floor) =>
+            schedule.FindIndex(floor1 => floor1.GetFloorNumber() < floor.GetFloorNumber()) != -1;
+
         public static bool IsEmpty => schedule.Count == 0;
     }
 }

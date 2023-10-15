@@ -28,5 +28,11 @@ namespace LiftSystem
             set => status = value;
             get => status;
         }
+
+        // public static bool WaitingForCommand
+        // {
+        //     get => waitingForCommand;
+        //     set => waitingForCommand = value;
+        // }
     }
 }  
