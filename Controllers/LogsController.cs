@@ -1,8 +1,4 @@
 using System;
-using System.Threading;
-using System.Windows;
-using System.Windows.Media;
-using System.Windows.Media.Animation;
 using LiftSystem.DTO;
 using LiftSystem.Model;
 using LiftSystem.views;
@@ -27,7 +23,7 @@ namespace LiftSystem.controllers
             AddEventHandlers();
             view.HideLogsPanelOnStartup();
             
-            // add some random values to the logs
+            // subscribe the log event
             LogsEventEmitter.AddOnLog((id, msg, created) =>
                 _logs.Dispatcher.Invoke(() => _logs.Items.Insert(0, $"{id} {msg} :: ({created})")));
             

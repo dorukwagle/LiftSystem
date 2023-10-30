@@ -36,6 +36,7 @@
   <ItemGroup>
     <Compile Include="Controllers\Floor1.cs" />
     <Compile Include="Controllers\Floor2.cs" />
+    <Compile Include="Controllers\Floor3.cs" />
     <Compile Include="Controllers\LiftController.cs" />
     <Compile Include="Controllers\LogsController.cs" />
     <Compile Include="DTO\Log.cs" />
@@ -61,7 +62,6 @@
     <Compile Include="Views\ButtonEllipsis.cs">
       <SubType>Component</SubType>
     </Compile>
-    <Compile Include="Views\CarView.cs" />
     <Compile Include="Views\DisplayPanel.cs" />
     <Compile Include="Views\FloorView.cs" />
     <Compile Include="Views\LiftView.cs" />

@@ -1,11 +1,8 @@
-using System;
 using System.ComponentModel;
 using System.Threading;
-using System.Windows.Media.TextFormatting;
 using LiftSystem.Enums;
 using LiftSystem.interfaces;
 using LiftSystem.Model;
-using LiftSystem.views;
 using LiftSystem.views;
 
 namespace LiftSystem.controllers
@@ -81,7 +78,7 @@ namespace LiftSystem.controllers
             }
             LiftState.Status = LiftStatus.Stopped;
         }
-
+    
         private void MoveLiftUp()
         {
             PrepareForMovement();
@@ -114,11 +111,10 @@ namespace LiftSystem.controllers
         private void PrepareForMovement()
         {
             LiftState.Status = LiftStatus.Moving;
-            if (LiftState.CurrentFloor.IsDoorOpened)
-            {
-                LiftState.CurrentFloor.CloseDoor();
-                WaitForDoorClose();
-            }
+            if (!LiftState.CurrentFloor.IsDoorOpened) return;
+            
+            LiftState.CurrentFloor.CloseDoor();
+            WaitForDoorClose();
         }
 
         private void WaitForDoorClose() => Thread.Sleep(Constants.DoorAnimationDuration * 1000);

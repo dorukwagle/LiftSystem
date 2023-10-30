@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using LiftSystem.interfaces;
 
@@ -16,7 +17,6 @@ namespace LiftSystem.Model
         public static bool Dequeue(IFloor floor)
         {
             if (!schedule.Contains(floor)) return false;
-            
             schedule.Remove(floor);
             return true;
         }
