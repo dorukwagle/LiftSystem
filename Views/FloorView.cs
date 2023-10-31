@@ -245,11 +245,16 @@ namespace LiftSystem.views
 
         public void PlayLiftDownIndicator()
         {
-            IndicatorDown.RunWorkerAsync();
+            if (!IndicatorDown.IsBusy)
+                IndicatorDown.RunWorkerAsync();
         }
 
 
-        public void PlayLiftUpIndicator() => IndicatorUp.RunWorkerAsync();
+        public void PlayLiftUpIndicator()
+        {
+            if (!IndicatorUp.IsBusy)
+                IndicatorUp.RunWorkerAsync();
+        }
 
         public void StopIndicator()
         {

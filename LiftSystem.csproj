@@ -59,10 +59,6 @@
     <Compile Include="Utils\LiftState.cs" />
     <Compile Include="Utils\ScheduleEventEmitter.cs" />
     <Compile Include="Utils\LogsEventEmitter.cs" />
-    <Compile Include="Views\ButtonEllipsis.cs">
-      <SubType>Component</SubType>
-    </Compile>
-    <Compile Include="Views\DisplayPanel.cs" />
     <Compile Include="Views\FloorView.cs" />
     <Compile Include="Views\LiftView.cs" />
     <Compile Include="Views\LogsView.cs" />
