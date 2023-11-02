@@ -12,6 +12,9 @@ namespace LiftSystem
         public const string LogsButtonHideText = "<< Hide Logs";
         public const string SqlConnectionString = "server=localhost;database=liftsystem;uid=root;pwd=doruk;";
         public const int DoorAnimationDuration = 1; //sec
-        public static readonly IFloor[] Floors = { new Floor1(), new Floor2(), new Floor3() };
+        public static readonly IFloor[] Floors =
+        {
+            new Floor1(), new Floor2(), new Floor3(), new Floor4()
+        };
     }
 }

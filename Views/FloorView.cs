@@ -24,7 +24,7 @@ namespace LiftSystem.views
         
         private ScaleTransform leftDoorAnimation;
         private ScaleTransform rightDoorAmination;
-        private int leftDoorPosition = 75;
+        private int leftDoorPosition;
         private TextBlock IndicatorLabel;
 
         private BackgroundWorker IndicatorUp;
@@ -32,7 +32,6 @@ namespace LiftSystem.views
         
         public FloorView(int width, int height)
         {
-            var liftDoorWidth = 100;
             IndicatorUp = new BackgroundWorker();
             IndicatorDown = new BackgroundWorker();
             IndicatorDown.WorkerSupportsCancellation = true;
@@ -42,8 +41,12 @@ namespace LiftSystem.views
             _canvas.Width = width / 2;
             _canvas.Height = height / 2 - 5;
             
-            var numPadLeft = _canvas.Width / 2 - 42;
-            var numPadTop = _canvas.Height / 2 - 50;
+            var liftDoorWidth = width / 7.2;
+            leftDoorPosition = (int) (width / 9.7);
+            var numPadLeft = _canvas.Width / 2.8;
+            var numPadTop = _canvas.Height / 2.5;
+            Console.WriteLine(liftDoorWidth);
+            Console.WriteLine(leftDoorPosition);
             
             numPad = new Button[Constants.Floors.Length];
             
